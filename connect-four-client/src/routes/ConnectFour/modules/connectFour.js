@@ -1,54 +1,65 @@
 // ------------------------------------
+// Mock Data
+// ------------------------------------
+import BOARD_MOCK_DATA from '../../../../data/BOARD_MOCK_DATA.json'
+
+// ------------------------------------
 // Constants
 // ------------------------------------
-export const CONNECT_FOUR_INCREMENT = 'CONNECT_FOUR_INCREMENT'
-export const CONNECT_FOUR_DOUBLE_ASYNC = 'CONNECT_FOUR_DOUBLE_ASYNC'
+export const CONNECT_FOUR_REQUEST_BOARD = 'CONNECT_FOUR_REQUEST_BOARD'
+export const CONNECT_FOUR_RECEIVE_BOARD = 'CONNECT_FOUR_RECEIVE_BOARD'
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export function increment (value = 1) {
+export function requestBoard () {
   return {
-    type    : CONNECT_FOUR_INCREMENT,
-    payload : value
+    type: CONNECT_FOUR_REQUEST_BOARD
   }
 }
 
-/*  This is a thunk, meaning it is a function that immediately
-    returns a function for lazy evaluation. It is incredibly useful for
-    creating async actions, especially when combined with redux-thunk! */
-
-export const doubleAsync = () => {
-  return (dispatch, getState) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        dispatch({
-          type    : CONNECT_FOUR_DOUBLE_ASYNC,
-          payload : getState().connectFour
-        })
-        resolve()
-      }, 200)
-    })
+export function receiveBoard (value) {
+  return {
+    type: CONNECT_FOUR_RECEIVE_BOARD,
+    payload: value
   }
 }
 
-export const actions = {
-  increment,
-  doubleAsync
+export const fetchBoard = () => {
+  return (dispatch) => {
+    dispatch(requestBoard())
+
+    return dispatch(receiveBoard(BOARD_MOCK_DATA.board))
+  }
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [CONNECT_FOUR_INCREMENT]    : (state, action) => state + action.payload,
-  [CONNECT_FOUR_DOUBLE_ASYNC] : (state, action) => state * 2
+  [CONNECT_FOUR_REQUEST_BOARD]: (state) => {
+    return ({
+      ...state,
+      fetchingBoard: true
+    })
+  },
+  [CONNECT_FOUR_RECEIVE_BOARD]: (state, action) => {
+    return ({
+      ...state,
+      board: action.payload,
+      fetchingBoard: false
+    })
+  }
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = 0
+const initialState = {
+  fetchingBoard: false,
+  board: []
+}
+
 export default function connectFourReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
