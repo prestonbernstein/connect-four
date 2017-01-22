@@ -13,9 +13,12 @@ The client and the server are separate applications. I chose to separate these t
 ### Why Rails?
 I chose to use Rails because of its opinionated workflow. My goal was to get a usable and reliable server up as soon as possible. Even thought this application really only is used to generate JSON, the default Rails middleware provides a lot of useful features.
 
+### Why React-Redux-Starter-Kit?
+I chose to use the React-Redux-Starter-Kit to speed up my development time. The starter kit already contains a sophisticated webpack build system already setup with a bunch of useful features, such as hot reloading, SCSS, unit testing, and more.
+
 ## TODO
 * ~~Setup empty git repo~~
 * ~~Add *rails* application for server~~
-* Add *react-redux-starter-kit* application for client folder
+* ~~Add *react-redux-starter-kit* application for client folder~~
 * Develop client app, which contains game logic
 * Develop server app
