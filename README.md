@@ -21,4 +21,5 @@ I chose to use the React-Redux-Starter-Kit to speed up my development time. The 
 * ~~Add *rails* application for server~~
 * ~~Add *react-redux-starter-kit* application for client folder~~
 * Develop client app, which contains game logic
+  * Add connect four route and relevant files, and remove default routes
 * Develop server app
