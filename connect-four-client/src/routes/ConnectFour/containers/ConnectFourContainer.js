@@ -1,5 +1,9 @@
 import { connect } from 'react-redux'
-import { fetchBoard } from '../modules/connectFour'
+import {
+  fetchNewBoard,
+  startGame,
+  playTurn
+} from '../modules/connectFour'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -13,11 +17,15 @@ import ConnectFourIndex from '../components/ConnectFourIndex'
     implementing our wrapper around increment; the component doesn't care   */
 
 const mapDispatchToProps = {
-  fetchBoard
+  fetchNewBoard,
+  startGame,
+  playTurn
 }
 
 const mapStateToProps = (state) => ({
-  board : state.connectFour.board
+  board : state.connectFour.board,
+  isBoardActive: state.connectFour.isBoardActive,
+  currentPlayer: state.connectFour.currentPlayer
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
