@@ -1,0 +1,17 @@
+.connect-four-cell {
+  display: table-cell;
+}
+
+.circle {
+  background: #4679BD;
+  border-radius: 50%;
+  display: inline-block;
+  height: 0;
+  padding: 0;
+  padding-bottom: 50%;
+  width: 50%;
+
+  &:hover {
+    background: #30588e;
+  }
+}

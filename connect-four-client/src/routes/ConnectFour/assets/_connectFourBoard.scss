@@ -1,0 +1,20 @@
+// Ensure container containing table takes up entire view possible
+.connect-four-board {
+  background-color: $yellow;
+  border-style: solid;
+}
+
+.disabled {
+  opacity: .4;
+  pointer-events: none;
+}
+
+.connect-four-row {
+  box-sizing: border-box;
+  display: table;
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
