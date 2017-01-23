@@ -2,7 +2,7 @@ import React from 'react'
 
 export const ConnectFourCell = (props) => (
   <li className='connect-four-cell'>
-    <h2>{props.cellStatus}</h2>
+    <div className="circle"></div>
   </li>
 )
 
