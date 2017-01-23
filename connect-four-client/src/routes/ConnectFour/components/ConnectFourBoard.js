@@ -5,7 +5,7 @@ import ConnectFourCell from './ConnectFourCell'
 export const ConnectFourBoard = (props) => (
   <div
     id='ConnectFourBoard'
-    className='connect-four-board'
+    className='connect-four-board row'
   >
     {
       props.board.map((row, y) =>

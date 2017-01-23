@@ -1,10 +1,12 @@
 import React from 'react'
 import '../assets/ConnectFour.scss'
 
+import ConnectFourControls from './ConnectFourControls'
 import ConnectFourBoard from './ConnectFourBoard'
 
 export const ConnectFourIndex = (props) => (
   <div>
+    <ConnectFourControls />
     <ConnectFourBoard
       board={props.board}
     />

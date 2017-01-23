@@ -4,9 +4,12 @@
   border-style: solid;
 }
 
+.disabled {
+  opacity: .4;
+  pointer-events: none;
+}
+
 .connect-four-row {
-  border-color: $red;
-  border-style: dashed;
   box-sizing: border-box;
   display: table;
   list-style-type: none;

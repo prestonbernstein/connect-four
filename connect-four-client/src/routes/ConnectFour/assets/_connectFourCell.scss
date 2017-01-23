@@ -1,6 +1,4 @@
 .connect-four-cell {
-  border-color: $black;
-  border-style: dotted;
   display: table-cell;
 }
 
@@ -9,6 +7,11 @@
   border-radius: 50%;
   display: inline-block;
   height: 0;
+  padding: 0;
   padding-bottom: 50%;
   width: 50%;
+
+  &:hover {
+    background: #30588e;
+  }
 }

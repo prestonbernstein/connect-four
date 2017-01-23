@@ -2,7 +2,7 @@ import React from 'react'
 
 export const ConnectFourCell = (props) => (
   <li className='connect-four-cell'>
-    <div className="circle"></div>
+    <div className="circle"/>
   </li>
 )
 
