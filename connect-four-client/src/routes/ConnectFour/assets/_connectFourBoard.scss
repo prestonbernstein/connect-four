@@ -1,10 +1,11 @@
 // Ensure container containing table takes up entire view possible
 .connect-four-board {
+  background-color: $yellow;
   border-style: solid;
 }
 
 .connect-four-row {
-  border-color: #008000;
+  border-color: $red;
   border-style: dashed;
   box-sizing: border-box;
   display: table;
