@@ -1,11 +1,13 @@
 import React from 'react'
 
-export const ConnectFourCell = () => (
-  <div>
-    <h2>Hi, I'm a cell</h2>
-  </div>
+export const ConnectFourCell = (props) => (
+  <li className='connect-four-cell'>
+    <h2>{props.cellStatus}</h2>
+  </li>
 )
 
-ConnectFourCell.propTypes = {}
+ConnectFourCell.propTypes = {
+  cellStatus: React.PropTypes.number
+}
 
 export default ConnectFourCell

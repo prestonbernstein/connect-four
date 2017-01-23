@@ -1,0 +1,16 @@
+// Ensure container containing table takes up entire view possible
+.connect-four-board {
+  border-style: solid;
+}
+
+.connect-four-row {
+  border-color: #008000;
+  border-style: dashed;
+  box-sizing: border-box;
+  display: table;
+  list-style-type: none;
+  margin: auto;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
