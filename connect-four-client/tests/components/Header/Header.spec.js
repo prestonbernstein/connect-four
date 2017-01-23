@@ -27,7 +27,7 @@ describe('(Component) Header', () => {
 
     it('Should render a Link to About route', () => {
       expect(_wrapper.contains(
-        <Link activeClassName='route--active' to='/counter'>
+        <Link activeClassName='route--active' to='/about'>
           About
         </Link>
       )).to.be.true

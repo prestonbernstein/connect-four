@@ -49,7 +49,7 @@
       }
     },
     "deploy:prod": {
-      "command": "npm run deploy",
+      "command": "npm run deploy && echo connect-four.prestonbernstein.com > dist/CNAME && surge -p dist --domain https://connect-four.prestonbernstein.com ",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"

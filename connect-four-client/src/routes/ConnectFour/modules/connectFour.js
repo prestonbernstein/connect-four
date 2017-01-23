@@ -6,7 +6,10 @@ import BOARD_MOCK_DATA from '../../../../data/BOARD_MOCK_DATA.json'
 // ------------------------------------
 // Utils
 // ------------------------------------
-import { calculateCurrentPlayer } from '../utils'
+import {
+  calculateCurrentPlayer,
+  calculateBoardUpdate
+} from '../utils'
 
 // ------------------------------------
 // Constants
@@ -108,9 +111,12 @@ const ACTION_HANDLERS = {
     })
   },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
+    const x = action.payload.x
+    // const y = action.payload.y
+    const board = calculateBoardUpdate(state.board, x, state.currentPlayer)
     return ({
       ...state,
-      // board: utils.updateBoard(action.payload.x, action.payload.y)
+      board: board
     })
   },
   [CONNECT_FOUR_CHANGE_CURRENT_PLAYER]: (state) => {
