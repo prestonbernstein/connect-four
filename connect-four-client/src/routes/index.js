@@ -1,7 +1,6 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/CoreLayout'
 import ConnectFourRoute from './ConnectFour'
-import AboutRoute from './About'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -9,10 +8,7 @@ import AboutRoute from './About'
 export const createRoutes = (store) => ({
   path        : '/',
   component   : CoreLayout,
-  indexRoute  : ConnectFourRoute(store),
-  childRoutes : [
-    AboutRoute(store)
-  ]
+  indexRoute  : ConnectFourRoute(store)
 })
 
 /*  Note: childRoutes can be chunked or otherwise loaded programmatically

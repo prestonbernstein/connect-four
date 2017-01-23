@@ -1,0 +1,14 @@
+.connect-four-current-turn-label {
+  display: inline-block;
+}
+
+.connect-four-current-turn-circle {
+  display: inline-block;
+}
+
+.circle-mini {
+  @extend %circle;
+  padding-bottom: 25%;
+  pointer-events: none;
+  width: 25%;
+}
