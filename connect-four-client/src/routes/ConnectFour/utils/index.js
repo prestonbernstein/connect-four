@@ -29,11 +29,18 @@ export const calculateIfGameWon = (lastMove, board, currentPlayer) => {
   const { x, y } = lastMove
   if (calculateIfWonVertically(x, y, board, currentPlayer) === true) {
     return true
-  } else if (calculateIfWonHorizontally(x, y, board, currentPlayer) === true) {
-    return true
-  } else {
-    return false
   }
+  if (calculateIfWonHorizontally(x, y, board, currentPlayer) === true) {
+    return true
+  }
+  if (calculateIfWonDiagonallyUpLeftAndRightDown(x, y, board, currentPlayer) === true) {
+    return true
+  }
+  if (calculateIfWonDiagonallyUpRightAndLeftDown(x, y, board, currentPlayer) === true) {
+    return true
+  }
+
+  return false
 }
 
 export const calculateAIMove = (lastMove) => {
@@ -65,7 +72,7 @@ const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
   let count = 1
 
   // check left
-  for (let i = x - 1; i < x; i++) {
+  for (let i = x - 1; i >= 0; i--) {
     if (board[y][i] === currentPlayer) {
       count++
     } else {
@@ -87,4 +94,12 @@ const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
   }
 
   return false // keep playing
+}
+
+const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) => {
+  return false
+}
+
+const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) => {
+  return false
 }
