@@ -82,75 +82,21 @@ const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
 }
 
 const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) => {
-  let count = 1
-  let tempY = y
-  let i
+  const diagonallyUpLeftAndRightDownCount = calculateDiagonallyUpLeftAndRightDown(x, y, board, currentPlayer)
+  const totalDiagonallyUpLeftAndRightDownCount = diagonallyUpLeftAndRightDownCount.totalCount
 
-  // check diagonally up and left
-  if (y > 0) { // only run if not at top of board
-    for ((i = x - 1); i >= 0; i--) {
-      tempY--
-      if ((tempY >= 0) && (board[tempY][i] === currentPlayer)) {
-        count++
-      } else {
-        break // exit if not contiguous
-      }
-    }
+  if (totalDiagonallyUpLeftAndRightDownCount >= 4) { // four or more are connected
+    return true // win
   }
 
-  tempY = y // reset temp variable to run next for loops
-
-  // check diagonally down and right
-  if (x < 6 && y < 5) { // only run if not at rightmost edge of board
-    for ((i = x + 1); i < board[y].length; i++) {
-      tempY++
-      if ((tempY <= 5) && (board[tempY][i] === currentPlayer)) {
-        count++
-      } else {
-        break // exit if not contiguous
-      }
-    }
-  }
-
-  if (count >= 4) {
-    return true
-  }
-
-  return false
+  return false // keep playing
 }
 
 const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) => {
-  let count = 1
-  let tempY = y
-  let i
+  const diagonallyUpRightAndLeftDownCount = calculateDiagonallyUpRightAndLeftDown(x, y, board, currentPlayer)
+  const totalDiagonallyUpRightAndLeftDownCount = diagonallyUpRightAndLeftDownCount.totalCount
 
-  // check diagonally up and right
-  if (y > 0) { // only run if not at top of board
-    for ((i = x + 1); i <= 6; i++) {
-      tempY--
-      if ((tempY >= 0) && (board[tempY][i] === currentPlayer)) {
-        count++
-      } else {
-        break // exit if not contiguous
-      }
-    }
-  }
-
-  tempY = y // reset temp variable to run next for loops
-
-  // check diagonally down and left
-  if (x > 0 && y < 5) { // only run if not at leftmost edge of board
-    for ((i = x - 1); i >= 0; i--) {
-      tempY++
-      if ((tempY <= 5) && (board[tempY][i] === currentPlayer)) {
-        count++
-      } else {
-        break // exit if not contiguous
-      }
-    }
-  }
-
-  if (count >= 4) {
+  if (totalDiagonallyUpRightAndLeftDownCount >= 4) {
     return true
   }
 
@@ -182,9 +128,6 @@ const calculateHorizontally = (x, y, board, currentPlayer) => {
   for (let i = x - 1; i >= 0; i--) {
     if (board[y][i] === currentPlayer) {
       leftCount++
-    // } else if (i > 0 && board[y][i - 1] === currentPlayer) {
-      // need to find a way to add to count without messing up app
-      console.log('need to fill in gap')
     } else {
       break // exit if not contiguous
     }
@@ -194,13 +137,14 @@ const calculateHorizontally = (x, y, board, currentPlayer) => {
   for (let i = x + 1; i <= board[y].length; i++) {
     if (board[y][i] === currentPlayer) { // if contiguous match
       rightCount++
-    // } else if (i < board[y].length && board[y][i + 1] === currentPlayer) {
-      // need to find a way to add to the count here without messing up app
       console.log('need to fill in gap')
     } else {
       break // exit if not contiguous
     }
   }
+
+  // TODO: Add condition that checks line for matching pieces only separated by one empty space
+  // and make that condition activated when AI is on hard mode
 
   totalCount = totalCount + leftCount + rightCount
 
@@ -211,9 +155,94 @@ const calculateHorizontally = (x, y, board, currentPlayer) => {
   }
 }
 
+const calculateDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) => {
+  let totalCount = 1
+  let leftUpCount = 0
+  let rightDownCount = 0
+
+  let tempY = y
+  let i
+
+  // check diagonally up and left
+  if (y > 0) { // only run if not at top of board
+    for ((i = x - 1); i >= 0; i--) {
+      tempY--
+      if ((tempY >= 0) && (board[tempY][i] === currentPlayer)) {
+        leftUpCount++
+      } else {
+        break // exit if not contiguous
+      }
+    }
+  }
+
+  tempY = y // reset temp variable to run next for loops
+
+  // check diagonally down and right
+  if (x < 6 && y < 5) { // only run if not at rightmost edge of board
+    for ((i = x + 1); i < board[y].length; i++) {
+      tempY++
+      if ((tempY <= 5) && (board[tempY][i] === currentPlayer)) {
+        rightDownCount++
+      } else {
+        break // exit if not contiguous
+      }
+    }
+  }
+
+  totalCount = totalCount + leftUpCount + rightDownCount
+
+  return {
+    totalCount: totalCount,
+    leftUpCount: leftUpCount,
+    rightDownCount: rightDownCount
+  }
+}
+
+const calculateDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) => {
+  let totalCount = 1
+  let rightUpCount = 0
+  let leftDownCount = 0
+
+  let tempY = y
+  let i
+
+  // check diagonally up and right
+  if (y > 0) { // only run if not at top of board
+    for ((i = x + 1); i <= 6; i++) {
+      tempY--
+      if ((tempY >= 0) && (board[tempY][i] === currentPlayer)) {
+        rightUpCount++
+      } else {
+        break // exit if not contiguous
+      }
+    }
+  }
+
+  tempY = y // reset temp variable to run next for loops
+
+  // check diagonally down and left
+  if (x > 0 && y < 5) { // only run if not at leftmost edge of board
+    for ((i = x - 1); i >= 0; i--) {
+      tempY++
+      if ((tempY <= 5) && (board[tempY][i] === currentPlayer)) {
+        leftDownCount++
+      } else {
+        break // exit if not contiguous
+      }
+    }
+  }
+
+  totalCount = totalCount + rightUpCount + leftDownCount
+
+  return {
+    totalCount: totalCount,
+    rightUpCount: rightUpCount,
+    leftDownCount: leftDownCount
+  }
+}
+
 const AIVerticalMove = (x, y, board, previousPlayer) => {
   const previousPlayerVerticalCount = calculateVertically(x, y, board, previousPlayer)
-  console.log('previousPlayerVerticalCount', previousPlayerVerticalCount)
   return { x:x, y:y }
 }
 
@@ -248,4 +277,12 @@ const AIHorizontalMove = (x, y, board, previousPlayer) => {
   }
 
   return { x:x, y:y }
+}
+
+const AIDiagonallyUpLeftAndRightDownMove = (x, y, board, currentPlayer) => {
+  return { x, y }
+}
+
+const AIDiagonallyUpRightAndLeftDownMove = (x, y, board, currentPlayer) => {
+  return { x, y }
 }
