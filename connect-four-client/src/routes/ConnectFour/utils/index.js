@@ -90,7 +90,7 @@ const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) 
   if (y > 0) { // only run if not at top of board
     for ((i = x - 1); i >= 0; i--) {
       tempY--
-      if (board[tempY][i] === currentPlayer) {
+      if ((tempY >= 0) && (board[tempY][i] === currentPlayer)) {
         count++
       } else {
         break // exit if not contiguous
@@ -104,7 +104,7 @@ const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) 
   if (x < 6 && y < 5) { // only run if not at rightmost edge of board
     for ((i = x + 1); i < board[y].length; i++) {
       tempY++
-      if (board[tempY][i] === currentPlayer) {
+      if ((tempY <= 5) && (board[tempY][i] === currentPlayer)) {
         count++
       } else {
         break // exit if not contiguous
@@ -128,7 +128,7 @@ const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) 
   if (y > 0) { // only run if not at top of board
     for ((i = x + 1); i <= 6; i++) {
       tempY--
-      if (board[tempY][i] === currentPlayer) {
+      if ((tempY >= 0) && (board[tempY][i] === currentPlayer)) {
         count++
       } else {
         break // exit if not contiguous
@@ -142,7 +142,7 @@ const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) 
   if (x > 0 && y < 5) { // only run if not at leftmost edge of board
     for ((i = x - 1); i >= 0; i--) {
       tempY++
-      if (board[tempY][i] === currentPlayer) {
+      if ((tempY <= 5) && (board[tempY][i] === currentPlayer)) {
         count++
       } else {
         break // exit if not contiguous
