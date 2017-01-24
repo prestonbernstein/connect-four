@@ -11,6 +11,7 @@ export const ConnectFourIndex = (props) => (
       startGame={props.startGame}
       currentPlayer={props.currentPlayer}
       isBoardActive={props.isBoardActive}
+      isGameOver={props.isGameOver}
     />
     <ConnectFourBoard
       isBoardActive={props.isBoardActive}
@@ -27,6 +28,7 @@ ConnectFourIndex.propTypes = {
     )
   ),
   isBoardActive: React.PropTypes.bool,
+  isGameOver: React.PropTypes.bool,
   startGame: React.PropTypes.func,
   fetchNewBoard: React.PropTypes.func,
   currentPlayer: React.PropTypes.number,

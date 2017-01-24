@@ -97,6 +97,32 @@ const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
 }
 
 const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) => {
+  let count = 1
+
+  // check diagonally up and left
+  for (let i = x - 1; i >= 0; i--) {
+    y--
+    if (board[y][i] === currentPlayer) {
+      count++
+    } else {
+      break // exit if not contiguous
+    }
+  }
+
+  // check diagonally down and right
+  for (let i = x + 1; i < board[y].length; i++) {
+    y++
+    if (board[y][i] === currentPlayer) {
+      count++
+    } else {
+      break // exit if not contiguous
+    }
+  }
+
+  if (count >= 4) {
+    return true
+  }
+
   return false
 }
 

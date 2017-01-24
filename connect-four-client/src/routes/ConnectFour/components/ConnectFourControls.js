@@ -27,8 +27,14 @@ export const ConnectFourControls = (props) => {
       className='row'
     >
       <div className='pull-left'>
-        <div className='connect-four-current-turn-label'><h3>Player {props.currentPlayer}'s turn:</h3></div>
-        <div className={currentTurnClasses} />
+        {
+          (props.isGameOver)
+          ? <div className='connect-four-current-turn-label'><h3>Game over!</h3></div>
+          : <div className='pull-left'>
+            <div className='connect-four-current-turn-label'><h3>Player {props.currentPlayer}'s turn:</h3></div>
+            <div className={currentTurnClasses} />
+          </div>
+        }
       </div>
       <div className='btn-group pull-right'>
         <button
