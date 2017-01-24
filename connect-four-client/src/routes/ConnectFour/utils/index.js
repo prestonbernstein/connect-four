@@ -84,10 +84,11 @@ const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
 const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) => {
   let count = 1
   let tempY = y
+  let i
 
   // check diagonally up and left
-  if (tempY > 0) { // only run if not at top of board
-    for (let i = x - 1; i >= 0; i--) {
+  if (y > 0) { // only run if not at top of board
+    for ((i = x - 1); i >= 0; i--) {
       tempY--
       if (board[tempY][i] === currentPlayer) {
         count++
@@ -100,12 +101,10 @@ const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) 
   tempY = y // reset temp variable to run next for loops
 
   // check diagonally down and right
-  if (x < 6) { // only run if not at rightmost edge of board
-    for (let i = x + 1; i < board[y].length; i++) {
+  if (x < 6 && y < 5) { // only run if not at rightmost edge of board
+    for ((i = x + 1); i < board[y].length; i++) {
       tempY++
-      if (tempY > 5) {
-        break
-      } else if (board[tempY][i] === currentPlayer) {
+      if (board[tempY][i] === currentPlayer) {
         count++
       } else {
         break // exit if not contiguous
@@ -123,10 +122,11 @@ const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) 
 const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) => {
   let count = 1
   let tempY = y
+  let i
 
-  // check diagonally up and left
-  if (tempY > 0) { // only run if not at top of board
-    for (let i = x - 1; i >= 0; i--) {
+  // check diagonally up and right
+  if (y > 0) { // only run if not at top of board
+    for ((i = x + 1); i <= 6; i++) {
       tempY--
       if (board[tempY][i] === currentPlayer) {
         count++
@@ -138,13 +138,11 @@ const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) 
 
   tempY = y // reset temp variable to run next for loops
 
-  // check diagonally down and right
-  if (x > 0) { // only run if not at leftmost edge of board
-    for (let i = x + 1; i < board[tempY].length; i++) {
+  // check diagonally down and left
+  if (x > 0 && y < 5) { // only run if not at leftmost edge of board
+    for ((i = x - 1); i >= 0; i--) {
       tempY++
-      if (tempY > 5) {
-        break
-      } else if (board[tempY][i] === currentPlayer) {
+      if (board[tempY][i] === currentPlayer) {
         count++
       } else {
         break // exit if not contiguous
