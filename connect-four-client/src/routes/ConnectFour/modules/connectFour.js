@@ -69,20 +69,23 @@ export function changeCurrentPlayer () {
 
 export const fetchNewBoard = () => {
   return (dispatch) => {
-    dispatch(requestNewBoard())
+    // no need to wrap in promise because this will have fetch
+    Promise.resolve(dispatch(requestNewBoard()))
 
-    return dispatch(receiveNewBoard(BOARD_MOCK_DATA.board))
+    return Promise.resolve(dispatch(receiveNewBoard(BOARD_MOCK_DATA.board)))
   }
 }
 
 export const playTurn = (x, y) => {
   return (dispatch) => {
-    dispatch(updateBoard(x, y))
-    dispatch(checkIfWinner())
-    dispatch(changeCurrentPlayer())
-    setTimeout(() => { // system moves too blazing fast to visually tell it's the computer's turn!
-      dispatch(makeAIMoveIfPlayerTwo())
-    }, 1000)
+    Promise.all([
+      dispatch(updateBoard(x, y)),
+      dispatch(checkIfWinner()),
+      dispatch(changeCurrentPlayer()),
+      setTimeout(() => { // system moves too blazing fast to visually tell it's the computer's turn!
+        dispatch(makeAIMoveIfPlayerTwo())
+      }, 1000)
+    ])
   }
 }
 
@@ -92,7 +95,7 @@ const checkIfWinner = () => {
 
     // returns true if won
     if (calculateIfGameWon(lastMove) === true) {
-      dispatch(endGame())
+      Promise.resolve(dispatch(endGame()))
     }
 
     return Promise.resolve()
@@ -110,7 +113,7 @@ const makeAIMoveIfPlayerTwo = () => {
       return Promise.resolve()
     }
 
-    return dispatch(getAIMove(lastMove))
+    return Promise.resolve(dispatch(getAIMove(lastMove)))
   }
 }
 
@@ -119,7 +122,7 @@ const getAIMove = (lastMove) => {
     const AIMove = calculateAIMove(lastMove)
     const { x, y } = AIMove
 
-    return dispatch(playTurn(x, y))
+    return Promise.resolve(dispatch(playTurn(x, y)))
   }
 }
 
