@@ -5,6 +5,7 @@ export const calculateCurrentPlayer = (previousPlayer) => {
 }
 
 export const calculateBoardUpdate = (board, x, currentPlayer) => {
+  // TODO: bug where if player one has piece at y location 0 then it errors out on player two's move
   const updatedPieceYPosition = calculateNewPieceYPosition(board, x)
   let lastMove = []
   board[updatedPieceYPosition][x] = currentPlayer
@@ -13,7 +14,7 @@ export const calculateBoardUpdate = (board, x, currentPlayer) => {
 }
 
 const calculateNewPieceYPosition = (board, x) => {
-  // iterate through each row to search for first row with pieces currently in it, then set  n
+  // iterate through each row to search for first row with pieces currently in it, then set
   let y = 5
   for (let i = 0; i < board.length; i++) {
     if (board[i][x] !== 0) {
@@ -82,26 +83,33 @@ const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
 
 const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) => {
   let count = 1
+  let tempY = y
 
   // check diagonally up and left
-  for (let i = x - 1; i >= 0; i--) {
-    y--
-    if (board[y][i] === currentPlayer) {
-      count++
-    } else {
-      break // exit if not contiguous
+  if (tempY > 0) { // only run if not at top of board
+    for (let i = x - 1; i >= 0; i--) {
+      tempY--
+      if (board[tempY][i] === currentPlayer) {
+        count++
+      } else {
+        break // exit if not contiguous
+      }
     }
   }
 
+  tempY = y // reset temp variable to run next for loops
+
   // check diagonally down and right
-  for (let i = x + 1; i < board[y].length; i++) {
-    y++
-    if (y > 5) {
-      break
-    } else if (board[y][i] === currentPlayer) {
-      count++
-    } else {
-      break // exit if not contiguous
+  if (x < 6) { // only run if not at rightmost edge of board
+    for (let i = x + 1; i < board[y].length; i++) {
+      tempY++
+      if (tempY > 5) {
+        break
+      } else if (board[tempY][i] === currentPlayer) {
+        count++
+      } else {
+        break // exit if not contiguous
+      }
     }
   }
 
@@ -113,6 +121,41 @@ const calculateIfWonDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) 
 }
 
 const calculateIfWonDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) => {
+  let count = 1
+  let tempY = y
+
+  // check diagonally up and left
+  if (tempY > 0) { // only run if not at top of board
+    for (let i = x - 1; i >= 0; i--) {
+      tempY--
+      if (board[tempY][i] === currentPlayer) {
+        count++
+      } else {
+        break // exit if not contiguous
+      }
+    }
+  }
+
+  tempY = y // reset temp variable to run next for loops
+
+  // check diagonally down and right
+  if (x > 0) { // only run if not at leftmost edge of board
+    for (let i = x + 1; i < board[tempY].length; i++) {
+      tempY++
+      if (tempY > 5) {
+        break
+      } else if (board[tempY][i] === currentPlayer) {
+        count++
+      } else {
+        break // exit if not contiguous
+      }
+    }
+  }
+
+  if (count >= 4) {
+    return true
+  }
+
   return false
 }
 
@@ -141,6 +184,9 @@ const calculateHorizontally = (x, y, board, currentPlayer) => {
   for (let i = x - 1; i >= 0; i--) {
     if (board[y][i] === currentPlayer) {
       leftCount++
+    // } else if (i > 0 && board[y][i - 1] === currentPlayer) {
+      // need to find a way to add to count without messing up app
+      console.log('need to fill in gap')
     } else {
       break // exit if not contiguous
     }
@@ -148,21 +194,29 @@ const calculateHorizontally = (x, y, board, currentPlayer) => {
 
   // check right
   for (let i = x + 1; i <= board[y].length; i++) {
-    if (board[y][i] === currentPlayer) {
+    if (board[y][i] === currentPlayer) { // if contiguous match
       rightCount++
+    // } else if (i < board[y].length && board[y][i + 1] === currentPlayer) {
+      // need to find a way to add to the count here without messing up app
+      console.log('need to fill in gap')
     } else {
       break // exit if not contiguous
     }
   }
 
   totalCount = totalCount + leftCount + rightCount
-  console.log(totalCount)
 
   return {
     totalCount: totalCount,
     leftCount: leftCount,
     rightCount: rightCount
   }
+}
+
+const AIVerticalMove = (x, y, board, previousPlayer) => {
+  const previousPlayerVerticalCount = calculateVertically(x, y, board, previousPlayer)
+  console.log('previousPlayerVerticalCount', previousPlayerVerticalCount)
+  return { x:x, y:y }
 }
 
 const AIHorizontalMove = (x, y, board, previousPlayer) => {
@@ -173,12 +227,12 @@ const AIHorizontalMove = (x, y, board, previousPlayer) => {
     rightCount
   } = previousPlayerHorizontalCount
 
-  const proposedNewXLocationLeft = x - (leftCount - 1) // set proposed new location left of contiguous pieces
+  const proposedNewXLocationLeft = x - (leftCount + 1) // set proposed new location left of contiguous pieces
   const proposedNewXLocationRight = x + (rightCount + 1) // set proposed new location left of contiguous pieces
 
   // calculate space to left
   if (
-    totalCount === 2 && // if previousPlayer has two horizontal pieces laid contiguously
+    totalCount >= 2 && // if previousPlayer has two horizontal pieces laid contiguously
     proposedNewXLocationLeft !== x && // if proposedNewXLocationLeft is not same as current x location
     proposedNewXLocationLeft >= 0 &&  // if x location just before previousPlayer's pieces is on board
     board[y][proposedNewXLocationLeft] === 0 // if new x location is empty
@@ -188,7 +242,7 @@ const AIHorizontalMove = (x, y, board, previousPlayer) => {
 
   // calculate space to right
   if (
-    totalCount === 2 && // if previousPlayer has two horizontal pieces laid contiguously
+    totalCount >= 2 && // if previousPlayer has two horizontal pieces laid contiguously
     proposedNewXLocationRight <= 6 && // if x location just after previousPlayer's pieces is on board
     board[y][proposedNewXLocationRight] === 0 // if new x location is empty
   ) {

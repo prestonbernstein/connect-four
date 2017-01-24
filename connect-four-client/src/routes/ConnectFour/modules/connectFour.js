@@ -97,7 +97,7 @@ const checkIfWinner = () => {
 
     return Promise.all([
       dispatch(changeCurrentPlayer()),
-      dispatch(makeAIMoveIfPlayerTwo())
+      // dispatch(makeAIMoveIfPlayerTwo())
     ])
   }
 }
