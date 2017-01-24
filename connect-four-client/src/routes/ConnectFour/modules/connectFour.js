@@ -8,7 +8,9 @@ import BOARD_MOCK_DATA from '../../../../data/BOARD_MOCK_DATA.json'
 // ------------------------------------
 import {
   calculateCurrentPlayer,
-  calculateBoardUpdate
+  calculateBoardUpdate,
+  calculateIfGameWon,
+  calculateAIMove
 } from '../utils'
 
 // ------------------------------------
@@ -17,6 +19,7 @@ import {
 export const CONNECT_FOUR_REQUEST_NEW_BOARD = 'CONNECT_FOUR_REQUEST_NEW_BOARD'
 export const CONNECT_FOUR_RECEIVE_NEW_BOARD = 'CONNECT_FOUR_RECEIVE_NEW_BOARD'
 export const CONNECT_FOUR_START_GAME = 'CONNECT_FOUR_START_GAME'
+export const CONNECT_FOUR_END_GAME = 'CONNECT_FOUR_END_GAME'
 export const CONNECT_FOUR_UPDATE_BOARD = 'CONNECT_FOUR_UPDATE_BOARD'
 export const CONNECT_FOUR_CHANGE_CURRENT_PLAYER = 'CONNECT_FOUR_CHANGE_CURRENT_PLAYER'
 
@@ -42,6 +45,12 @@ export function startGame () {
   }
 }
 
+export function endGame () {
+  return {
+    type: CONNECT_FOUR_END_GAME
+  }
+}
+
 export function updateBoard (x, y) {
   return {
     type: CONNECT_FOUR_UPDATE_BOARD,
@@ -58,29 +67,63 @@ export function changeCurrentPlayer () {
   }
 }
 
-// export const fetchBoard = () => {
-//   return (dispatch) => {
-//     dispatch(requestBoard())
-//
-//      TODO: if fetchBoard cannot find existing board, return new board
-//
-//     return dispatch(receiveNewBoard(BOARD_MOCK_DATA.board))
-//   }
-// }
-
 export const fetchNewBoard = () => {
   return (dispatch) => {
-    dispatch(requestNewBoard())
-
-    return dispatch(receiveNewBoard(BOARD_MOCK_DATA.board))
+    // change this from promise because this will have fetch
+    return Promise.all([
+      dispatch(requestNewBoard()),
+      dispatch(receiveNewBoard(BOARD_MOCK_DATA.board))
+    ])
   }
 }
 
 export const playTurn = (x, y) => {
   return (dispatch) => {
-    dispatch(updateBoard(x, y))
+    return Promise.all([
+      dispatch(updateBoard(x, y)),
+      dispatch(checkIfWinner())
+    ])
+  }
+}
 
-    return dispatch(changeCurrentPlayer())
+const checkIfWinner = () => {
+  return (dispatch, getState) => {
+    const { lastMove, board, currentPlayer } = getState().connectFour
+
+    // returns true if won
+    if (calculateIfGameWon(lastMove, board, currentPlayer) === true) {
+      return Promise.resolve(dispatch(endGame()))
+    }
+
+    return Promise.all([
+      dispatch(changeCurrentPlayer()),
+      dispatch(makeAIMoveIfPlayerTwo())
+    ])
+  }
+}
+
+const makeAIMoveIfPlayerTwo = () => {
+  return (dispatch, getState) => {
+    const {
+      currentPlayer,
+      lastMove,
+      board
+    } = getState().connectFour
+
+    if (currentPlayer === 1) {
+      return Promise.resolve()
+    }
+
+    return Promise.resolve(dispatch(getAIMove(lastMove, board)))
+  }
+}
+
+const getAIMove = (lastMove) => {
+  return (dispatch) => {
+    const AIMove = calculateAIMove(lastMove)
+    const { x, y } = AIMove
+
+    return Promise.resolve(dispatch(playTurn(x, y)))
   }
 }
 
@@ -110,13 +153,27 @@ const ACTION_HANDLERS = {
       currentPlayer: 1
     })
   },
+  [CONNECT_FOUR_END_GAME]: (state) => {
+    return ({
+      ...state,
+      isGameOver: true,
+      isBoardActive: false,
+      currentPlayer: 0
+    })
+  },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
     const x = action.payload.x
     // const y = action.payload.y
-    const board = calculateBoardUpdate(state.board, x, state.currentPlayer)
+    const boardAndLastMove = calculateBoardUpdate(state.board, x, state.currentPlayer)
+    const {
+      board, // use lastMove to calculate AI move
+      lastMove // if currently player one's turn then calculate move for AI
+    } = boardAndLastMove
+
     return ({
       ...state,
-      board: board
+      board: board,
+      lastMove: lastMove
     })
   },
   [CONNECT_FOUR_CHANGE_CURRENT_PLAYER]: (state) => {
@@ -133,7 +190,9 @@ const ACTION_HANDLERS = {
 const initialState = {
   fetchingBoard: false,
   board: [],
+  lastMove: [],
   isBoardActive: false,
+  isGameOver: false,
   currentPlayer: 0
 }
 

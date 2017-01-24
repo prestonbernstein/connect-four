@@ -10,6 +10,7 @@ export const ConnectFourIndex = (props) => (
       fetchNewBoard={props.fetchNewBoard}
       startGame={props.startGame}
       currentPlayer={props.currentPlayer}
+      isBoardActive={props.isBoardActive}
     />
     <ConnectFourBoard
       isBoardActive={props.isBoardActive}

@@ -9,6 +9,18 @@ export const ConnectFourControls = (props) => {
     'player-two': (props.currentPlayer === 2)
   })
 
+  let startButtonClasses = classNames({
+    'btn': true,
+    'btn-primary': true,
+    'disabled': (props.isBoardActive)
+  })
+
+  let resetButtonClasses = classNames({
+    'btn': true,
+    'btn-danger': true,
+    'disabled': (!props.isBoardActive)
+  })
+
   return (
     <div
       id='ConnectFourControls'
@@ -22,7 +34,7 @@ export const ConnectFourControls = (props) => {
         <button
           type='button'
           id='ConnectFourButtonStartGame'
-          className='btn btn-primary'
+          className={startButtonClasses}
           onClick={props.startGame}
         >
           Start This Game
@@ -30,7 +42,7 @@ export const ConnectFourControls = (props) => {
         <button
           type='button'
           id='ConnectFourButtonResetGame'
-          className='btn btn-danger'
+          className={resetButtonClasses}
           onClick={props.fetchNewBoard}
         >
           Reset Game Board
@@ -44,6 +56,7 @@ ConnectFourControls.propTypes = {
   startGame: React.PropTypes.func,
   fetchNewBoard: React.PropTypes.func,
   isBoardActive: React.PropTypes.bool,
+  isGameOver: React.PropTypes.bool,
   currentPlayer: React.PropTypes.number
 }
 
