@@ -25,13 +25,66 @@ const calculateNewPieceYPosition = (board, x) => {
   return y
 }
 
-export const calculateIfGameWon = () => {
-  console.log('calculate if game won')
-  let isGameWon = false
-  return isGameWon
+export const calculateIfGameWon = (lastMove, board, currentPlayer) => {
+  const { x, y } = lastMove
+  if (calculateIfWonVertically(x, y, board, currentPlayer) === true) {
+    return true
+  } else if (calculateIfWonHorizontally(x, y, board, currentPlayer) === true) {
+    return true
+  } else {
+    return false
+  }
 }
 
 export const calculateAIMove = (lastMove) => {
   console.log('calculate AI Move')
   return lastMove
+}
+
+// returns true or false
+const calculateIfWonVertically = (x, y, board, currentPlayer) => {
+  console.log('board', board[y][x])
+  // check below value and count to see if matching current piece laid
+  for (let i = y + 1; i < board.length; i++) {
+    let count = 1
+    if (board[i][x] === currentPlayer) {
+      count++
+    }
+
+    if (count === 4) { // four are connected vertically
+      return true // win
+    }
+
+    return false // keep playing
+  }
+}
+
+// returns true or false
+const calculateIfWonHorizontally = (x, y, board, currentPlayer) => {
+  // check left of value and count to see if matching current piece laid
+  let count = 1
+
+  // check left
+  for (let i = x - 1; i < x; i++) {
+    if (board[y][i] === currentPlayer) {
+      count++
+    } else {
+      break // exit if not contiguous
+    }
+  }
+
+  // check right
+  for (let i = x + 1; i <= board[y].length; i++) {
+    if (board[y][i] === currentPlayer) {
+      count++
+    } else {
+      break // exit if not contiguous
+    }
+  }
+
+  if (count >= 4) { // four or more are connected horizontally
+    return true // win
+  }
+
+  return false // keep playing
 }

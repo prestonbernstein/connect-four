@@ -69,36 +69,36 @@ export function changeCurrentPlayer () {
 
 export const fetchNewBoard = () => {
   return (dispatch) => {
-    // no need to wrap in promise because this will have fetch
-    Promise.resolve(dispatch(requestNewBoard()))
-
-    return Promise.resolve(dispatch(receiveNewBoard(BOARD_MOCK_DATA.board)))
+    // change this from promise because this will have fetch
+    return Promise.all([
+      dispatch(requestNewBoard()),
+      dispatch(receiveNewBoard(BOARD_MOCK_DATA.board))
+    ])
   }
 }
 
 export const playTurn = (x, y) => {
   return (dispatch) => {
-    Promise.all([
+    return Promise.all([
       dispatch(updateBoard(x, y)),
-      dispatch(checkIfWinner()),
-      dispatch(changeCurrentPlayer()),
-      setTimeout(() => { // system moves too blazing fast to visually tell it's the computer's turn!
-        dispatch(makeAIMoveIfPlayerTwo())
-      }, 1000)
+      dispatch(checkIfWinner())
     ])
   }
 }
 
 const checkIfWinner = () => {
   return (dispatch, getState) => {
-    const { lastMove } = getState().connectFour
+    const { lastMove, board, currentPlayer } = getState().connectFour
 
     // returns true if won
-    if (calculateIfGameWon(lastMove) === true) {
-      Promise.resolve(dispatch(endGame()))
+    if (calculateIfGameWon(lastMove, board, currentPlayer) === true) {
+      return Promise.resolve(dispatch(endGame()))
     }
 
-    return Promise.resolve()
+    return Promise.all([
+      dispatch(changeCurrentPlayer()),
+      dispatch(makeAIMoveIfPlayerTwo())
+    ])
   }
 }
 
@@ -106,14 +106,15 @@ const makeAIMoveIfPlayerTwo = () => {
   return (dispatch, getState) => {
     const {
       currentPlayer,
-      lastMove
+      lastMove,
+      board
     } = getState().connectFour
 
     if (currentPlayer === 1) {
       return Promise.resolve()
     }
 
-    return Promise.resolve(dispatch(getAIMove(lastMove)))
+    return Promise.resolve(dispatch(getAIMove(lastMove, board)))
   }
 }
 
@@ -156,7 +157,8 @@ const ACTION_HANDLERS = {
     return ({
       ...state,
       isGameOver: true,
-      isBoardActive: false
+      isBoardActive: false,
+      currentPlayer: 0
     })
   },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
