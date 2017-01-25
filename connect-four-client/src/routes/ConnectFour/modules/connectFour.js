@@ -21,6 +21,7 @@ export const CONNECT_FOUR_RECEIVE_NEW_BOARD = 'CONNECT_FOUR_RECEIVE_NEW_BOARD'
 export const CONNECT_FOUR_START_GAME = 'CONNECT_FOUR_START_GAME'
 export const CONNECT_FOUR_END_GAME = 'CONNECT_FOUR_END_GAME'
 export const CONNECT_FOUR_UPDATE_BOARD = 'CONNECT_FOUR_UPDATE_BOARD'
+export const CONNECT_FOUR_RESET_BOARD = 'CONNECT_FOUR_RESET_BOARD'
 export const CONNECT_FOUR_CHANGE_CURRENT_PLAYER = 'CONNECT_FOUR_CHANGE_CURRENT_PLAYER'
 
 // ------------------------------------
@@ -61,9 +62,24 @@ export function updateBoard (x, y) {
   }
 }
 
+function resetBoard () {
+  return {
+    type: CONNECT_FOUR_RESET_BOARD
+  }
+}
+
 export function changeCurrentPlayer () {
   return {
     type: CONNECT_FOUR_CHANGE_CURRENT_PLAYER
+  }
+}
+
+export function restartGame () {
+  return (dispatch) => {
+    return Promise.all([
+      dispatch(endGame()),
+      dispatch(resetBoard())
+    ])
   }
 }
 
@@ -92,7 +108,8 @@ const checkIfWinner = () => {
 
     // returns true if won
     if (calculateIfGameWon(lastMove, board, currentPlayer) === true) {
-      return Promise.resolve(dispatch(endGame()))
+      return Promise.resolve(
+        dispatch(endGame()))
     }
 
     return Promise.all([
@@ -115,14 +132,13 @@ const makeAIMoveIfPlayerTwo = () => {
       return Promise.resolve()
     }
 
-    // TODO: currently not working correctly
-    return Promise.resolve(dispatch(getAIMove(lastMove, board, previousPlayer)))
+    return Promise.resolve(dispatch(getAIMove(lastMove, board, previousPlayer, currentPlayer)))
   }
 }
 
-const getAIMove = (lastMove, board, previousPlayer) => {
+const getAIMove = (lastMove, board, previousPlayer, currentPlayer) => {
   return (dispatch) => {
-    const AIMove = calculateAIMove(lastMove, board, previousPlayer)
+    const AIMove = calculateAIMove(lastMove, board, previousPlayer, currentPlayer)
     const { x, y } = AIMove
 
     return Promise.resolve(dispatch(playTurn(x, y)))
@@ -152,7 +168,16 @@ const ACTION_HANDLERS = {
     return ({
       ...state,
       isBoardActive: true,
-      currentPlayer: 1
+      isGameOver: false,
+      currentPlayer: 1,
+      board: [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0]
+      ]
     })
   },
   [CONNECT_FOUR_END_GAME]: (state) => {
@@ -166,7 +191,6 @@ const ACTION_HANDLERS = {
   },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
     const x = action.payload.x
-    // const y = action.payload.y
     const boardAndLastMove = calculateBoardUpdate(state.board, x, state.currentPlayer)
     const {
       board, // use lastMove to calculate AI move
@@ -177,6 +201,20 @@ const ACTION_HANDLERS = {
       ...state,
       board: board,
       lastMove: lastMove
+    })
+  },
+  [CONNECT_FOUR_RESET_BOARD]: (state, action) => {
+    console.log(savedInitialState)
+    return ({
+      ...state,
+      board: [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0]
+      ]
     })
   },
   [CONNECT_FOUR_CHANGE_CURRENT_PLAYER]: (state) => {
@@ -193,12 +231,21 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 const initialState = {
   fetchingBoard: false,
-  board: [],
+  board: [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]
+  ],
   lastMove: [],
   isBoardActive: false,
-  isGameOver: false,
+  isGameOver: true,
   currentPlayer: 0
 }
+
+const savedInitialState = initialState
 
 export default function connectFourReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]

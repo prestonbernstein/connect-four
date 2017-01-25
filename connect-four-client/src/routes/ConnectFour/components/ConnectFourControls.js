@@ -1,7 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
 
-export const ConnectFourControls = (props) => {
+const ConnectFourWinner = () => {
+  return (
+    <div className='connect-four-current-turn-label'><h3>Game over!</h3></div>
+  )
+}
+
+const ConnectFourCurrentTurn = (props) => {
   let currentTurnClasses = classNames({
     'circle-mini': true,
     'connect-four-current-turn-circle': true,
@@ -9,6 +15,19 @@ export const ConnectFourControls = (props) => {
     'player-two': (props.currentPlayer === 2)
   })
 
+  return (
+    <div className='pull-left'>
+      <div className='connect-four-current-turn-label'><h3>Player {props.currentPlayer}'s turn:</h3></div>
+      <div className={currentTurnClasses} />
+    </div>
+  )
+}
+
+ConnectFourCurrentTurn.propTypes = {
+  currentPlayer: React.PropTypes.number
+}
+
+export const ConnectFourControls = (props) => {
   let startButtonClasses = classNames({
     'btn': true,
     'btn-primary': true,
@@ -27,13 +46,11 @@ export const ConnectFourControls = (props) => {
       className='row'
     >
       <div className='pull-left'>
-        {
-          (props.isGameOver === true)
-          ? <div className='connect-four-current-turn-label'><h3>Game over!</h3></div>
-          : <div className='pull-left'>
-            <div className='connect-four-current-turn-label'><h3>Player {props.currentPlayer}'s turn:</h3></div>
-            <div className={currentTurnClasses} />
-          </div>
+        { props.isGameOver === true
+          ? <ConnectFourWinner />
+          : <ConnectFourCurrentTurn
+            currentPlayer={props.currentPlayer}
+            />
         }
       </div>
       <div className='btn-group pull-right'>
@@ -49,7 +66,7 @@ export const ConnectFourControls = (props) => {
           type='button'
           id='ConnectFourButtonResetGame'
           className={resetButtonClasses}
-          onClick={props.fetchNewBoard}
+          onClick={props.restartGame}
         >
           Reset Game Board
         </button>
@@ -60,7 +77,7 @@ export const ConnectFourControls = (props) => {
 
 ConnectFourControls.propTypes = {
   startGame: React.PropTypes.func,
-  fetchNewBoard: React.PropTypes.func,
+  restartGame: React.PropTypes.func,
   isBoardActive: React.PropTypes.bool,
   isGameOver: React.PropTypes.bool,
   currentPlayer: React.PropTypes.number
