@@ -1,7 +1,7 @@
 # Client
 
 .DS_STORE
-connect-four-client/*.log
+*.log
 
 connect-four-client/node_modules
 
