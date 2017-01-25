@@ -7,7 +7,6 @@ import BOARD_MOCK_DATA from '../../../../data/BOARD_MOCK_DATA.json'
 // Utils
 // ------------------------------------
 import {
-  calculateCurrentPlayer,
   calculateBoardUpdate,
   calculateIfGameWon,
   calculateAIMove
@@ -229,7 +228,7 @@ const ACTION_HANDLERS = {
     return ({
       ...state,
       previousPlayer: state.currentPlayer, // set currentPlayer to previousPlayer
-      currentPlayer: calculateCurrentPlayer(state.currentPlayer)
+      currentPlayer: state.currentPlayer === 1 ? 2 : 1
     })
   },
   [CONNECT_FOUR_CHANGE_DIFFICULTY]: (state) => {
