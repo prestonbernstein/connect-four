@@ -18,24 +18,24 @@ I chose to use the React-Redux-Starter-Kit to speed up my development time. The 
 
 ## TODO
 * ~~Setup empty git repo~~
-* ~~Add *rails* application for server~~
 * ~~Add *react-redux-starter-kit* application for client folder~~
-* Develop client app, which contains game logic
+* ~~Develop client app, which contains game logic~~
   * ~~Add connect four route and relevant files, and remove default routes~~
   * ~~Add logic to determine if game is won~~
     * ~~Add logic to determine if won vertically~~
     * ~~Add logic to determine if won horizontally~~
     * ~~Add logic to determine if won diagonally~~
-    * Only use api if logged in
-  * Add logic for AI to make moves
+  * ~~Add logic for AI to make moves~~
     * ~~Add logic for AI to make defensive moves vertically~~
     * ~~Add logic for AI to make defensive moves horizontally~~
     * ~~Add logic for AI to make defensive moves diagonally~~
-* Develop server app
-  * serve JSON containing array
 * BONUS
   * Bonus 1: Add hard mode
-    * Logic searches for gaps between pieces that when filled in will result in game over, and AI places piece to prevent
+    * Add logic for AI to make offensive moves vertically
+    * Add logic for AI to make offensive moves horizontally
+    * Add logic for AI to make offensive moves diagonally
   * Bonus 2: Persist games to a database
-    * Have user able to log in and sign up
-      * Able to click button to store game to database
+    * Develop server app
+      * Have user able to log in and sign up
+        * Able to click button to store game to database
+        * connect client app to server app
