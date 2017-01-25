@@ -24,12 +24,12 @@ I chose to use the React-Redux-Starter-Kit to speed up my development time. The 
   * ~~Add connect four route and relevant files, and remove default routes~~
   * ~~Add logic to determine if game is won~~
     * ~~Add logic to determine if won vertically~~
-    * Add logic to determine if won horizontally
-    * Add logic to determine if won diagonally
+    * ~~Add logic to determine if won horizontally~~
+    * ~~Add logic to determine if won diagonally~~
   * Add logic for AI to make moves
-    * Add logic for AI to make defensive moves vertically
+    * ~~Add logic for AI to make defensive moves vertically~~
     * ~~Add logic for AI to make defensive moves horizontally~~
-    * Add logic for AI to make defensive moves diagonally
+    * ~~Add logic for AI to make defensive moves diagonally~~
 * Develop server app
   * serve JSON containing array
 * BONUS

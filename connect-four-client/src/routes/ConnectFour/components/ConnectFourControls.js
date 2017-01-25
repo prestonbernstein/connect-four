@@ -28,7 +28,7 @@ export const ConnectFourControls = (props) => {
     >
       <div className='pull-left'>
         {
-          (props.isGameOver)
+          (props.isGameOver === true)
           ? <div className='connect-four-current-turn-label'><h3>Game over!</h3></div>
           : <div className='pull-left'>
             <div className='connect-four-current-turn-label'><h3>Player {props.currentPlayer}'s turn:</h3></div>
@@ -43,7 +43,7 @@ export const ConnectFourControls = (props) => {
           className={startButtonClasses}
           onClick={props.startGame}
         >
-          Start This Game
+          Start Game
         </button>
         <button
           type='button'
