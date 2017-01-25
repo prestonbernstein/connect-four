@@ -44,7 +44,7 @@ export const calculateIfGameWon = (lastMove, board, currentPlayer) => {
   return false
 }
 
-export const calculateAIMove = (lastMove, board, previousPlayer, currentPlayer) => {
+export const calculateAIMove = (lastMove, board, previousPlayer, currentPlayer, isHardMode) => {
   const { x, y } = lastMove
 
   // return suggested vertical move if available
@@ -77,8 +77,43 @@ export const calculateAIMove = (lastMove, board, previousPlayer, currentPlayer) 
     return suggestedDiagonallyUpRightAndLeftDownMove
   }
 
-  console.log('hard mode here')
+  console.log('hard mode here before', isHardMode)
   // repeat above calculations with currentPlayer
+  if (isHardMode) {
+    console.log('hard mode here before', isHardMode)
+
+    // return suggested vertical move if available
+    const suggestedVerticalMove = AIVerticalMove(x, y, board, currentPlayer)
+    if (suggestedVerticalMove.y !== lastMove.y) {
+      return suggestedVerticalMove
+    }
+
+    // return horizontal move if available
+    const suggestedHorizontalMove = AIHorizontalMove(x, y, board, currentPlayer)
+    if (suggestedHorizontalMove.x !== lastMove.x) {
+      return suggestedHorizontalMove
+    }
+
+    // return diagonallyUpLeftAndRightDown move if available
+    const suggestedDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(x, y, board, currentPlayer)
+    if (
+      suggestedDiagonallyUpLeftAndRightDownMove.x !== lastMove.x &&
+      suggestedDiagonallyUpLeftAndRightDownMove.y !== lastMove.y
+    ) {
+      return suggestedDiagonallyUpLeftAndRightDownMove
+    }
+
+    // return diagonallyUpRightAndLeftDown move if available
+    const suggestedDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(x, y, board, currentPlayer)
+    if (
+      suggestedDiagonallyUpRightAndLeftDownMove.x !== lastMove.x &&
+      suggestedDiagonallyUpRightAndLeftDownMove.y !== lastMove.y
+    ) {
+      return suggestedDiagonallyUpRightAndLeftDownMove
+    }
+  }
+
+  console.log('skipped')
 
   const suggestedAIFirstAvailableLocationMove = AIFirstAvailableLocationMove(board)
   suggestedAIFirstAvailableLocationMove !== lastMove
@@ -274,13 +309,13 @@ const calculateDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) => {
   }
 }
 
-const AIVerticalMove = (x, y, board, previousPlayer) => {
-  const previousPlayerVerticalCount = calculateVertically(x, y, board, previousPlayer)
+const AIVerticalMove = (x, y, board, player) => {
+  const playerVerticalCount = calculateVertically(x, y, board, player)
 
   const proposedNewYLocation = y - 1
 
   if (
-    previousPlayerVerticalCount > 2 &&
+    playerVerticalCount > 2 &&
     y > 0
   ) {
     return { x:x, y: proposedNewYLocation }
@@ -289,13 +324,13 @@ const AIVerticalMove = (x, y, board, previousPlayer) => {
   return { x:x, y:y }
 }
 
-const AIHorizontalMove = (x, y, board, previousPlayer) => {
-  const previousPlayerHorizontalCount = calculateHorizontally(x, y, board, previousPlayer)
+const AIHorizontalMove = (x, y, board, player) => {
+  const playerHorizontalCount = calculateHorizontally(x, y, board, player)
   const {
     totalCount,
     leftCount,
     rightCount
-  } = previousPlayerHorizontalCount
+  } = playerHorizontalCount
 
   const proposedNewXLocationLeft = x - (leftCount + 1) // set proposed new location left of contiguous pieces
   const proposedNewXLocationRight = x + (rightCount + 1) // set proposed new location left of contiguous pieces
@@ -322,13 +357,13 @@ const AIHorizontalMove = (x, y, board, previousPlayer) => {
   return { x:x, y:y }
 }
 
-const AIDiagonallyUpLeftAndRightDownMove = (x, y, board, currentPlayer) => {
-  const previousPlayerDiagonallyUpLeftAndRightDownMove = calculateDiagonallyUpLeftAndRightDown(x, y, board, currentPlayer) // eslint-disable-line
+const AIDiagonallyUpLeftAndRightDownMove = (x, y, board, player) => {
+  const playerDiagonallyUpLeftAndRightDownMove = calculateDiagonallyUpLeftAndRightDown(x, y, board, player) // eslint-disable-line
   const {
     totalCount,
     leftUpCount,
     rightDownCount
-  } = previousPlayerDiagonallyUpLeftAndRightDownMove
+  } = playerDiagonallyUpLeftAndRightDownMove
 
   // determine if should put piece left and up
   const proposedNewXLocationLeft = x - (leftUpCount + 1) // set proposed new location left of contiguous pieces
@@ -361,13 +396,13 @@ const AIDiagonallyUpLeftAndRightDownMove = (x, y, board, currentPlayer) => {
   return { x, y }
 }
 
-const AIDiagonallyUpRightAndLeftDownMove = (x, y, board, currentPlayer) => {
-  const previousPlayerDiagonallyUpRightAndLeftDownMove = calculateDiagonallyUpRightAndLeftDown(x, y, board, currentPlayer) // eslint-disable-line
+const AIDiagonallyUpRightAndLeftDownMove = (x, y, board, player) => {
+  const playerDiagonallyUpRightAndLeftDownMove = calculateDiagonallyUpRightAndLeftDown(x, y, board, player) // eslint-disable-line
   const {
     totalCount,
     rightUpCount,
     leftDownCount
-  } = previousPlayerDiagonallyUpRightAndLeftDownMove
+  } = playerDiagonallyUpRightAndLeftDownMove
 
   // determine if should put piece right and up
   const proposedNewXLocationRight = x + (rightUpCount + 1) // set proposed new location left of contiguous pieces

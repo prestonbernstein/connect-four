@@ -40,18 +40,29 @@ export const ConnectFourControls = (props) => {
     'disabled': (!props.isBoardActive)
   })
 
+  let changeDifficultyButtonClasses = classNames({
+    'btn': true,
+    'btn-warning': true,
+    'disabled': (props.isBoardActive)
+  })
+
+  const difficulty = props.isHardMode ? 'hard' : 'easy'
+
   return (
     <div
       id='ConnectFourControls'
       className='row'
     >
-      <div className='pull-left'>
+      <div className='pull-left row'>
         { props.isGameOver === true
           ? <ConnectFourWinner />
           : <ConnectFourCurrentTurn
             currentPlayer={props.currentPlayer}
             />
         }
+      </div>
+      <div className='pull-left row'>
+        <p><strong>Current Difficulty: </strong> { difficulty }</p>
       </div>
       <div className='btn-group pull-right'>
         <button
@@ -70,16 +81,26 @@ export const ConnectFourControls = (props) => {
         >
           Reset Game Board
         </button>
+        <button
+          type='button'
+          id='ConnectFourChangeDifficulty'
+          className={changeDifficultyButtonClasses}
+          onClick={props.changeDifficulty}
+        >
+          Change Difficulty
+        </button>
       </div>
     </div>
   )
 }
 
 ConnectFourControls.propTypes = {
+  changeDifficulty: React.PropTypes.func,
   startGame: React.PropTypes.func,
   restartGame: React.PropTypes.func,
   isBoardActive: React.PropTypes.bool,
   isGameOver: React.PropTypes.bool,
+  isHardMode: React.PropTypes.bool,
   currentPlayer: React.PropTypes.number
 }
 

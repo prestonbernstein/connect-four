@@ -23,6 +23,7 @@ export const CONNECT_FOUR_END_GAME = 'CONNECT_FOUR_END_GAME'
 export const CONNECT_FOUR_UPDATE_BOARD = 'CONNECT_FOUR_UPDATE_BOARD'
 export const CONNECT_FOUR_RESET_BOARD = 'CONNECT_FOUR_RESET_BOARD'
 export const CONNECT_FOUR_CHANGE_CURRENT_PLAYER = 'CONNECT_FOUR_CHANGE_CURRENT_PLAYER'
+export const CONNECT_FOUR_CHANGE_DIFFICULTY = 'CONNECT_FOUR_CHANGE_DIFFICULTY'
 
 // ------------------------------------
 // Actions
@@ -71,6 +72,12 @@ function resetBoard () {
 export function changeCurrentPlayer () {
   return {
     type: CONNECT_FOUR_CHANGE_CURRENT_PLAYER
+  }
+}
+
+export function changeDifficulty () {
+  return {
+    type: CONNECT_FOUR_CHANGE_DIFFICULTY
   }
 }
 
@@ -125,20 +132,21 @@ const makeAIMoveIfPlayerTwo = () => {
       currentPlayer,
       previousPlayer,
       lastMove,
-      board
+      board,
+      isHardMode
     } = getState().connectFour
 
     if (currentPlayer === 1) {
       return Promise.resolve()
     }
 
-    return Promise.resolve(dispatch(getAIMove(lastMove, board, previousPlayer, currentPlayer)))
+    return Promise.resolve(dispatch(getAIMove(lastMove, board, previousPlayer, currentPlayer, isHardMode)))
   }
 }
 
-const getAIMove = (lastMove, board, previousPlayer, currentPlayer) => {
+const getAIMove = (lastMove, board, previousPlayer, currentPlayer, isHardMode) => {
   return (dispatch) => {
-    const AIMove = calculateAIMove(lastMove, board, previousPlayer, currentPlayer)
+    const AIMove = calculateAIMove(lastMove, board, previousPlayer, currentPlayer, isHardMode)
     const { x, y } = AIMove
 
     return Promise.resolve(dispatch(playTurn(x, y)))
@@ -223,6 +231,12 @@ const ACTION_HANDLERS = {
       previousPlayer: state.currentPlayer, // set currentPlayer to previousPlayer
       currentPlayer: calculateCurrentPlayer(state.currentPlayer)
     })
+  },
+  [CONNECT_FOUR_CHANGE_DIFFICULTY]: (state) => {
+    return ({
+      ...state,
+      isHardMode: !state.isHardMode
+    })
   }
 }
 
@@ -242,6 +256,7 @@ const initialState = {
   lastMove: [],
   isBoardActive: false,
   isGameOver: true,
+  isHardMode: false,
   currentPlayer: 0
 }
 

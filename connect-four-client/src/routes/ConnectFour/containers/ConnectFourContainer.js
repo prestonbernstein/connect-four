@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import {
   startGame,
   restartGame,
-  playTurn
+  playTurn,
+  changeDifficulty
 } from '../modules/connectFour'
 
 /*  This is a container component. Notice it does not contain any JSX,
@@ -19,14 +20,16 @@ import ConnectFourIndex from '../components/ConnectFourIndex'
 const mapDispatchToProps = {
   startGame,
   restartGame,
-  playTurn
+  playTurn,
+  changeDifficulty
 }
 
 const mapStateToProps = (state) => ({
   board : state.connectFour.board,
   isBoardActive: state.connectFour.isBoardActive,
   currentPlayer: state.connectFour.currentPlayer,
-  isGameOver: state.connectFour.isGameOver
+  isGameOver: state.connectFour.isGameOver,
+  isHardMode: state.connectFour.isHardMode
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
