@@ -32,6 +32,9 @@ I chose to use the React-Redux-Starter-Kit to speed up my development time. The 
     * ~~Add logic for AI to make defensive moves diagonally~~
 * Develop server app
   * serve JSON containing array
+* Connect client app to server app
+* Push server to heroku
+* ~~Push client to Surge with CNAME sending to connect-four.prestonbernstein.com~~
 * BONUS
   * Bonus 1: Add hard mode
     * Logic searches for gaps between pieces that when filled in will result in game over, and AI places piece to prevent
