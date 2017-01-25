@@ -106,6 +106,7 @@ const makeAIMoveIfPlayerTwo = () => {
   return (dispatch, getState) => {
     const {
       currentPlayer,
+      previousPlayer,
       lastMove,
       board
     } = getState().connectFour
@@ -114,13 +115,14 @@ const makeAIMoveIfPlayerTwo = () => {
       return Promise.resolve()
     }
 
-    return Promise.resolve(dispatch(getAIMove(lastMove, board)))
+    // TODO: currently not working correctly
+    return Promise.resolve(dispatch(getAIMove(lastMove, board, previousPlayer)))
   }
 }
 
-const getAIMove = (lastMove) => {
+const getAIMove = (lastMove, board, previousPlayer) => {
   return (dispatch) => {
-    const AIMove = calculateAIMove(lastMove)
+    const AIMove = calculateAIMove(lastMove, board, previousPlayer)
     const { x, y } = AIMove
 
     return Promise.resolve(dispatch(playTurn(x, y)))
@@ -158,7 +160,8 @@ const ACTION_HANDLERS = {
       ...state,
       isGameOver: true,
       isBoardActive: false,
-      currentPlayer: 0
+      currentPlayer: 0,
+      previousPlayer: 0
     })
   },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
@@ -179,6 +182,7 @@ const ACTION_HANDLERS = {
   [CONNECT_FOUR_CHANGE_CURRENT_PLAYER]: (state) => {
     return ({
       ...state,
+      previousPlayer: state.currentPlayer, // set currentPlayer to previousPlayer
       currentPlayer: calculateCurrentPlayer(state.currentPlayer)
     })
   }
