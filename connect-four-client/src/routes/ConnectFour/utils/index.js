@@ -44,23 +44,23 @@ export const calculateIfGameWon = (lastMove, board, currentPlayer) => {
   return false
 }
 
-export const calculateAIMove = (lastMove, board, currentPlayer) => {
+export const calculateAIMove = (lastMove, board, previousPlayer, currentPlayer) => {
   const { x, y } = lastMove
 
   // return suggested vertical move if available
-  const suggestedVerticalMove = AIVerticalMove(x, y, board, currentPlayer)
+  const suggestedVerticalMove = AIVerticalMove(x, y, board, previousPlayer)
   if (suggestedVerticalMove.y !== lastMove.y) {
     return suggestedVerticalMove
   }
 
   // return horizontal move if available
-  const suggestedHorizontalMove = AIHorizontalMove(x, y, board, currentPlayer)
+  const suggestedHorizontalMove = AIHorizontalMove(x, y, board, previousPlayer)
   if (suggestedHorizontalMove.x !== lastMove.x) {
     return suggestedHorizontalMove
   }
 
   // return diagonallyUpLeftAndRightDown move if available
-  const suggestedDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(x, y, board, currentPlayer)
+  const suggestedDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(x, y, board, previousPlayer)
   if (
     suggestedDiagonallyUpLeftAndRightDownMove.x !== lastMove.x &&
     suggestedDiagonallyUpLeftAndRightDownMove.y !== lastMove.y
@@ -69,7 +69,7 @@ export const calculateAIMove = (lastMove, board, currentPlayer) => {
   }
 
   // return diagonallyUpRightAndLeftDown move if available
-  const suggestedDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(x, y, board, currentPlayer)
+  const suggestedDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(x, y, board, previousPlayer)
   if (
     suggestedDiagonallyUpRightAndLeftDownMove.x !== lastMove.x &&
     suggestedDiagonallyUpRightAndLeftDownMove.y !== lastMove.y
@@ -77,7 +77,11 @@ export const calculateAIMove = (lastMove, board, currentPlayer) => {
     return suggestedDiagonallyUpRightAndLeftDownMove
   }
 
+  console.log('hard mode here')
+  // repeat above calculations with currentPlayer
+
   const suggestedAIFirstAvailableLocationMove = AIFirstAvailableLocationMove(board)
+  suggestedAIFirstAvailableLocationMove !== lastMove
 
   if (
     suggestedAIFirstAvailableLocationMove !== lastMove

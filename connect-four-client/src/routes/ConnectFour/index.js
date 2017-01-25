@@ -1,5 +1,4 @@
 import { injectReducer } from '../../store/reducers'
-import { fetchNewBoard } from './modules/connectFour'
 
 export default (store) => ({
   /*  Async getComponent is only invoked when route matches   */
@@ -14,9 +13,6 @@ export default (store) => ({
 
       /*  Add the reducer to the store on key 'connectFour'  */
       injectReducer(store, { key: 'connectFour', reducer })
-
-      // fetchBoard so board is prepopulated. If cannot find existing board, return new board
-      store.dispatch(fetchNewBoard())
 
       /*  Return getComponent   */
       cb(null, ConnectFour)

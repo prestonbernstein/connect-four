@@ -7,8 +7,8 @@ import ConnectFourBoard from './ConnectFourBoard'
 export const ConnectFourIndex = (props) => (
   <div>
     <ConnectFourControls
-      fetchNewBoard={props.fetchNewBoard}
       startGame={props.startGame}
+      restartGame={props.restartGame}
       currentPlayer={props.currentPlayer}
       isBoardActive={props.isBoardActive}
       isGameOver={props.isGameOver}
@@ -30,7 +30,7 @@ ConnectFourIndex.propTypes = {
   isBoardActive: React.PropTypes.bool,
   isGameOver: React.PropTypes.bool,
   startGame: React.PropTypes.func,
-  fetchNewBoard: React.PropTypes.func,
+  restartGame: React.PropTypes.func,
   currentPlayer: React.PropTypes.number,
   playTurn: React.PropTypes.func
 }

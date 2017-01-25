@@ -26,6 +26,7 @@ I chose to use the React-Redux-Starter-Kit to speed up my development time. The 
     * ~~Add logic to determine if won vertically~~
     * ~~Add logic to determine if won horizontally~~
     * ~~Add logic to determine if won diagonally~~
+    * Only use api if logged in
   * Add logic for AI to make moves
     * ~~Add logic for AI to make defensive moves vertically~~
     * ~~Add logic for AI to make defensive moves horizontally~~
