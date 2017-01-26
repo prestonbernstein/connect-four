@@ -59,24 +59,39 @@ export const calculateIfGameWon = (lastMovePlayer1, lastMovePlayer2, board, curr
   return isGameWon
 }
 
-export const calculateAIMove = (lastMovePlayer1, lastMovePlayer2, board, previousPlayer, currentPlayer, isHardMode) => {
+export const calculateAIMove = (lastMovePlayer1, lastMovePlayer2, board, previousPlayer, currentPlayer) => {
   const opposingPlayerLastMove = currentPlayer === 1 ? lastMovePlayer2 : lastMovePlayer1
   const lastMove = currentPlayer === 1 ? lastMovePlayer1 : lastMovePlayer2
 
   // return suggested vertical move if available
-  const suggestedDefensiveVerticalMove = AIVerticalMove(opposingPlayerLastMove.x, opposingPlayerLastMove.y, board, previousPlayer) // eslint-disable-line
+  const suggestedDefensiveVerticalMove = AIVerticalMove(
+    opposingPlayerLastMove.x,
+    opposingPlayerLastMove.y,
+    board,
+    previousPlayer
+  )
   if (suggestedDefensiveVerticalMove.y !== opposingPlayerLastMove.y) {
     return suggestedDefensiveVerticalMove
   }
 
   // return horizontal move if available
-  const suggestedDefensiveHorizontalMove = AIHorizontalMove(opposingPlayerLastMove.x, opposingPlayerLastMove.y, board, previousPlayer) // eslint-disable-line
+  const suggestedDefensiveHorizontalMove = AIHorizontalMove(
+    opposingPlayerLastMove.x,
+    opposingPlayerLastMove.y,
+    board,
+    previousPlayer
+  )
   if (suggestedDefensiveHorizontalMove.x !== opposingPlayerLastMove.x) {
     return suggestedDefensiveHorizontalMove
   }
 
   // return diagonallyUpLeftAndRightDown move if available
-  const suggestedDefensiveDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(opposingPlayerLastMove.x, opposingPlayerLastMove.y, board, previousPlayer) // eslint-disable-line
+  const suggestedDefensiveDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(
+    opposingPlayerLastMove.x,
+    opposingPlayerLastMove.y,
+    board,
+    previousPlayer
+  )
   if (
     suggestedDefensiveDiagonallyUpLeftAndRightDownMove.x !== opposingPlayerLastMove.x &&
     suggestedDefensiveDiagonallyUpLeftAndRightDownMove.y !== opposingPlayerLastMove.y
@@ -85,7 +100,12 @@ export const calculateAIMove = (lastMovePlayer1, lastMovePlayer2, board, previou
   }
 
   // return diagonallyUpRightAndLeftDown move if available
-  const suggestedDefensiveDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(opposingPlayerLastMove.x, opposingPlayerLastMove.y, board, previousPlayer) // eslint-disable-line
+  const suggestedDefensiveDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(
+    opposingPlayerLastMove.x,
+    opposingPlayerLastMove.y,
+    board,
+    previousPlayer
+  )
   if (
     suggestedDefensiveDiagonallyUpRightAndLeftDownMove.x !== opposingPlayerLastMove.x &&
     suggestedDefensiveDiagonallyUpRightAndLeftDownMove.y !== opposingPlayerLastMove.y
@@ -108,7 +128,12 @@ export const calculateAIMove = (lastMovePlayer1, lastMovePlayer2, board, previou
     }
 
     // return diagonallyUpLeftAndRightDown move if available
-    const suggestedOffensiveDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(lastMove.x, lastMove.y, board, currentPlayer) // eslint-disable-line
+    const suggestedOffensiveDiagonallyUpLeftAndRightDownMove = AIDiagonallyUpLeftAndRightDownMove(
+      lastMove.x,
+      lastMove.y,
+      board,
+      currentPlayer
+    )
     if (
       suggestedOffensiveDiagonallyUpLeftAndRightDownMove.x !== lastMove.x &&
       suggestedOffensiveDiagonallyUpLeftAndRightDownMove.y !== lastMove.y
@@ -117,7 +142,12 @@ export const calculateAIMove = (lastMovePlayer1, lastMovePlayer2, board, previou
     }
 
     // return diagonallyUpRightAndLeftDown move if available
-    const suggestedOffensiveDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(lastMove.x, lastMove.y, board, currentPlayer) // eslint-disable-line
+    const suggestedOffensiveDiagonallyUpRightAndLeftDownMove = AIDiagonallyUpRightAndLeftDownMove(
+      lastMove.x,
+      lastMove.y,
+      board,
+      currentPlayer
+    )
     if (
       suggestedOffensiveDiagonallyUpRightAndLeftDownMove.x !== lastMove.x &&
       suggestedOffensiveDiagonallyUpRightAndLeftDownMove.y !== lastMove.y
