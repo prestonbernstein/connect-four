@@ -14,10 +14,10 @@ export const AIVerticalMove = (x, y, board, player) => {
     playerVerticalCount > 2 &&
     y > 0
   ) {
-    return { x:x, y: proposedNewYLocation }
+    return { x, y: proposedNewYLocation }
   }
 
-  return { x:x, y:y }
+  return { x, y }
 }
 
 export const AIHorizontalMove = (x, y, board, player) => {
@@ -47,10 +47,10 @@ export const AIHorizontalMove = (x, y, board, player) => {
     proposedNewXLocationRight <= 6 && // if x location just after previousPlayer's pieces is on board
     board[y][proposedNewXLocationRight] === 0 // if new x location is empty
   ) {
-    return { x: proposedNewXLocationRight, y:y } // return new suggested move
+    return { x: proposedNewXLocationRight, y } // return new suggested move
   }
 
-  return { x:x, y:y }
+  return { x, y }
 }
 
 export const AIDiagonallyUpLeftAndRightDownMove = (x, y, board, player) => {

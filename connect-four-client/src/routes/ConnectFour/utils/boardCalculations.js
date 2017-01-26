@@ -56,9 +56,9 @@ export const calculateHorizontally = (x, y, board, currentPlayer) => {
   totalCount = totalCount + leftCount + rightCount
 
   return {
-    totalCount: totalCount,
-    leftCount: leftCount,
-    rightCount: rightCount
+    totalCount,
+    leftCount,
+    rightCount
   }
 }
 
@@ -99,9 +99,9 @@ export const calculateDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer
   totalCount = totalCount + leftUpCount + rightDownCount
 
   return {
-    totalCount: totalCount,
-    leftUpCount: leftUpCount,
-    rightDownCount: rightDownCount
+    totalCount,
+    leftUpCount,
+    rightDownCount
   }
 }
 
@@ -142,8 +142,8 @@ export const calculateDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer
   totalCount = totalCount + rightUpCount + leftDownCount
 
   return {
-    totalCount: totalCount,
-    rightUpCount: rightUpCount,
-    leftDownCount: leftDownCount
+    totalCount,
+    rightUpCount,
+    leftDownCount
   }
 }
