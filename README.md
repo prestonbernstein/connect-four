@@ -1,5 +1,5 @@
 # connect-four
-A game of connect four, written in rails and react-redux
+A game of connect four, written in react-redux
 
 ## Technologies
 I chose to use existing frameworks to facilitate speed of development.
