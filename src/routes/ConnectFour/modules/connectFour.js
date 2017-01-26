@@ -4,7 +4,8 @@
 import {
   calculateBoardUpdate,
   calculateIfGameWon,
-  calculateAIMove
+  calculateAIMove,
+  createBoard
 } from '../utils'
 
 // ------------------------------------
@@ -12,6 +13,7 @@ import {
 // ------------------------------------
 export const CONNECT_FOUR_START_GAME = 'CONNECT_FOUR_START_GAME'
 export const CONNECT_FOUR_END_GAME = 'CONNECT_FOUR_END_GAME'
+export const CONNECT_FOUR_SET_WINNER = 'CONNECT_FOUR_SET_WINNER'
 export const CONNECT_FOUR_UPDATE_BOARD = 'CONNECT_FOUR_UPDATE_BOARD'
 export const CONNECT_FOUR_RESET_BOARD = 'CONNECT_FOUR_RESET_BOARD'
 export const CONNECT_FOUR_CHANGE_CURRENT_PLAYER = 'CONNECT_FOUR_CHANGE_CURRENT_PLAYER'
@@ -28,6 +30,12 @@ export function startGame () {
 export function endGame () {
   return {
     type: CONNECT_FOUR_END_GAME
+  }
+}
+
+export function setWinner () {
+  return {
+    type: CONNECT_FOUR_SET_WINNER
   }
 }
 
@@ -77,8 +85,10 @@ const checkIfWinner = () => {
 
     // returns true if won
     if (calculateIfGameWon(lastMovePlayer1, lastMovePlayer2, board, currentPlayer) === true) {
-      return Promise.resolve(
-        dispatch(endGame()))
+      return Promise.all([
+        dispatch(setWinner()),
+        dispatch(endGame())
+      ])
     }
 
     return Promise.all([
@@ -131,14 +141,7 @@ const ACTION_HANDLERS = {
       isBoardActive: true,
       isGameOver: false,
       currentPlayer: 1,
-      board: [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0]
-      ]
+      board: createBoard(6, 7, 0)
     })
   },
   [CONNECT_FOUR_END_GAME]: (state) => {
@@ -148,6 +151,12 @@ const ACTION_HANDLERS = {
       isBoardActive: false,
       currentPlayer: 0,
       previousPlayer: 0
+    })
+  },
+  [CONNECT_FOUR_SET_WINNER]: (state) => {
+    return ({
+      ...state,
+      winner: state.currentPlayer
     })
   },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
@@ -175,14 +184,7 @@ const ACTION_HANDLERS = {
   [CONNECT_FOUR_RESET_BOARD]: (state, action) => {
     return ({
       ...state,
-      board: [
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0]
-      ]
+      board: createBoard(6, 7, 0)
     })
   },
   [CONNECT_FOUR_CHANGE_CURRENT_PLAYER]: (state) => {
@@ -198,19 +200,13 @@ const ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 const initialState = {
-  board: [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0]
-  ],
+  board: createBoard(6, 7, 0),
   lastMovePlayer1: [],
   lastMovePlayer2: [],
   isBoardActive: false,
   isGameOver: true,
-  currentPlayer: 0
+  currentPlayer: 0,
+  winner: 0
 }
 
 export default function connectFourReducer (state = initialState, action) {

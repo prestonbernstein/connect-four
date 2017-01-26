@@ -14,6 +14,19 @@ import {
   AIFirstAvailableLocationMove
 } from './AIMoves'
 
+// creates a 2D array with initial values
+export const createBoard = (rows, cols, initialValue) => {
+  let arr = []
+  for (let i = 0; i < rows; ++i) {
+    let columns = []
+    for (let j = 0; j < cols; ++j) {
+      columns[j] = initialValue
+    }
+    arr[i] = columns
+  }
+  return arr
+}
+
 export const calculateBoardUpdate = (board, x, currentPlayer, lastMovePlayer1, lastMovePlayer2) => {
   const updatedPieceYPosition = calculateNewPieceYPosition(board, x)
   board[updatedPieceYPosition][x] = currentPlayer

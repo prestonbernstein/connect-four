@@ -1,9 +1,13 @@
 import React from 'react'
 import classNames from 'classnames'
 
-const ConnectFourStartGame = () => (
-  <div className='connect-four-current-turn-label'><h3>Start a game</h3></div>
+const ConnectFourWinner = (props) => (
+  <div className='connect-four-current-turn-label'><h3>Player {props.winner} wins last game!</h3></div>
 )
+
+ConnectFourWinner.propTypes = {
+  winner: React.PropTypes.number
+}
 
 const ConnectFourCurrentTurn = (props) => {
   let currentTurnClasses = classNames({
@@ -13,10 +17,21 @@ const ConnectFourCurrentTurn = (props) => {
     'player-two': (props.currentPlayer === 2)
   })
 
+const labelDisplay = props.currentPlayer === 0
+  ? <div className='connect-four-current-turn-label'><h3>Start a game.</h3></div>
+  : (
+    <div>
+      <div className='connect-four-current-turn-label'>
+        {labelDisplay}
+        <h3>Player {props.currentPlayer}'s turn:</h3>
+      </div>
+      <div className={currentTurnClasses} />
+    </div>
+  )
+
   return (
     <div className='pull-left'>
-      <div className='connect-four-current-turn-label'><h3>Player {props.currentPlayer}'s turn:</h3></div>
-      <div className={currentTurnClasses} />
+      {labelDisplay}
     </div>
   )
 }
@@ -44,8 +59,10 @@ export const ConnectFourControls = (props) => {
       className='row'
     >
       <div className='pull-left row'>
-        { props.isGameOver === true && props.currentPlayer !== 0
-          ? <ConnectFourStartGame />
+        { props.isGameOver === true && props.winner !== 0
+          ? <ConnectFourWinner
+            winner={props.winner}
+            />
           : <ConnectFourCurrentTurn
             currentPlayer={props.currentPlayer}
             />
@@ -78,7 +95,8 @@ ConnectFourControls.propTypes = {
   restartGame: React.PropTypes.func,
   isBoardActive: React.PropTypes.bool,
   isGameOver: React.PropTypes.bool,
-  currentPlayer: React.PropTypes.number
+  currentPlayer: React.PropTypes.number,
+  winner: React.PropTypes.number
 }
 
 export default ConnectFourControls
