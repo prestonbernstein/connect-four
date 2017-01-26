@@ -17,17 +17,17 @@ const ConnectFourCurrentTurn = (props) => {
     'player-two': (props.currentPlayer === 2)
   })
 
-const labelDisplay = props.currentPlayer === 0
-  ? <div className='connect-four-current-turn-label'><h3>Start a game.</h3></div>
-  : (
-    <div>
-      <div className='connect-four-current-turn-label'>
-        {labelDisplay}
-        <h3>Player {props.currentPlayer}'s turn:</h3>
+  const labelDisplay = props.currentPlayer === 0
+    ? <div className='connect-four-current-turn-label'><h3>Start a game.</h3></div>
+    : (
+      <div>
+        <div className='connect-four-current-turn-label'>
+          {labelDisplay}
+          <h3>Player {props.currentPlayer}'s turn:</h3>
+        </div>
+        <div className={currentTurnClasses} />
       </div>
-      <div className={currentTurnClasses} />
-    </div>
-  )
+    )
 
   return (
     <div className='pull-left'>
