@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for routes/ConnectFour/utils/boardCalculations.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">all files</a> / <a href="index.html">routes/ConnectFour/utils/</a> boardCalculations.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.35% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>5/68</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.35% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>5/68</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const calculateNewPieceYPosition = (board, x) =&gt; <span class="fstat-no" title="function not covered" >{</span>
+  // iterate through each row to search for first row with pieces currently in it, then set
+  let y = <span class="cstat-no" title="statement not covered" >5</span>
+<span class="cstat-no" title="statement not covered" >  for (let i = 0; i &lt; board.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    if (board[i][x] !== 0) {</span>
+<span class="cstat-no" title="statement not covered" >      y = i - 1</span>
+<span class="cstat-no" title="statement not covered" >      break</span>
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return y</span>
+}
+&nbsp;
+export const calculateVertically = (x, y, board, currentPlayer) =&gt; <span class="fstat-no" title="function not covered" >{</span>
+  let count = <span class="cstat-no" title="statement not covered" >1</span>
+&nbsp;
+  // check below value and count to see if matching current piece laid
+<span class="cstat-no" title="statement not covered" >  for (let i = y + 1; i &lt; board.length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    if (board[i][x] === currentPlayer) {</span>
+<span class="cstat-no" title="statement not covered" >      count++</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      break </span>// exit if not contiguous
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return count</span>
+}
+&nbsp;
+export const calculateHorizontally = (x, y, board, currentPlayer) =&gt; <span class="fstat-no" title="function not covered" >{</span>
+  // check left of value and count to see if matching current piece laid
+  let totalCount = <span class="cstat-no" title="statement not covered" >1</span>
+  let leftCount = <span class="cstat-no" title="statement not covered" >0</span>
+  let rightCount = <span class="cstat-no" title="statement not covered" >0</span>
+&nbsp;
+  // check left
+<span class="cstat-no" title="statement not covered" >  for (let i = x - 1; i &gt;= 0; i--) {</span>
+<span class="cstat-no" title="statement not covered" >    if (board[y][i] === currentPlayer) {</span>
+<span class="cstat-no" title="statement not covered" >      leftCount++</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      break </span>// exit if not contiguous
+    }
+  }
+&nbsp;
+  // check right
+<span class="cstat-no" title="statement not covered" >  for (let i = x + 1; i &lt;= board[y].length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >    if (board[y][i] === currentPlayer) { // if contiguous match</span>
+<span class="cstat-no" title="statement not covered" >      rightCount++</span>
+    } else {
+<span class="cstat-no" title="statement not covered" >      break </span>// exit if not contiguous
+    }
+  }
+&nbsp;
+  // TODO: Add condition that checks line for matching pieces only separated by one empty space
+  // and make that condition activated when AI is on hard mode
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  totalCount = totalCount + leftCount + rightCount</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    totalCount: totalCount,
+    leftCount: leftCount,
+    rightCount: rightCount
+  }
+}
+&nbsp;
+export const calculateDiagonallyUpLeftAndRightDown = (x, y, board, currentPlayer) =&gt; <span class="fstat-no" title="function not covered" >{</span>
+  let totalCount = <span class="cstat-no" title="statement not covered" >1</span>
+  let leftUpCount = <span class="cstat-no" title="statement not covered" >0</span>
+  let rightDownCount = <span class="cstat-no" title="statement not covered" >0</span>
+&nbsp;
+  let tempY = <span class="cstat-no" title="statement not covered" >y</span>
+  let i
+&nbsp;
+  // check diagonally up and left
+<span class="cstat-no" title="statement not covered" >  if (y &gt; 0) { // only run if not at top of board</span>
+<span class="cstat-no" title="statement not covered" >    for ((i = x - 1); i &gt;= 0; i--) {</span>
+<span class="cstat-no" title="statement not covered" >      tempY--</span>
+<span class="cstat-no" title="statement not covered" >      if ((tempY &gt;= 0) &amp;&amp; (board[tempY][i] === currentPlayer)) {</span>
+<span class="cstat-no" title="statement not covered" >        leftUpCount++</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        break </span>// exit if not contiguous
+      }
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  tempY = y </span>// reset temp variable to run next for loops
+&nbsp;
+  // check diagonally down and right
+<span class="cstat-no" title="statement not covered" >  if (x &lt; 6 &amp;&amp; y &lt; 5) { // only run if not at rightmost edge of board</span>
+<span class="cstat-no" title="statement not covered" >    for ((i = x + 1); i &lt; board[y].length; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      tempY++</span>
+<span class="cstat-no" title="statement not covered" >      if ((tempY &lt;= 5) &amp;&amp; (board[tempY][i] === currentPlayer)) {</span>
+<span class="cstat-no" title="statement not covered" >        rightDownCount++</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        break </span>// exit if not contiguous
+      }
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  totalCount = totalCount + leftUpCount + rightDownCount</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    totalCount: totalCount,
+    leftUpCount: leftUpCount,
+    rightDownCount: rightDownCount
+  }
+}
+&nbsp;
+export const calculateDiagonallyUpRightAndLeftDown = (x, y, board, currentPlayer) =&gt; <span class="fstat-no" title="function not covered" >{</span>
+  let totalCount = <span class="cstat-no" title="statement not covered" >1</span>
+  let rightUpCount = <span class="cstat-no" title="statement not covered" >0</span>
+  let leftDownCount = <span class="cstat-no" title="statement not covered" >0</span>
+&nbsp;
+  let tempY = <span class="cstat-no" title="statement not covered" >y</span>
+  let i
+&nbsp;
+  // check diagonally up and right
+<span class="cstat-no" title="statement not covered" >  if (y &gt; 0) { // only run if not at top of board</span>
+<span class="cstat-no" title="statement not covered" >    for ((i = x + 1); i &lt;= 6; i++) {</span>
+<span class="cstat-no" title="statement not covered" >      tempY--</span>
+<span class="cstat-no" title="statement not covered" >      if ((tempY &gt;= 0) &amp;&amp; (board[tempY][i] === currentPlayer)) {</span>
+<span class="cstat-no" title="statement not covered" >        rightUpCount++</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        break </span>// exit if not contiguous
+      }
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  tempY = y </span>// reset temp variable to run next for loops
+&nbsp;
+  // check diagonally down and left
+<span class="cstat-no" title="statement not covered" >  if (x &gt; 0 &amp;&amp; y &lt; 5) { // only run if not at leftmost edge of board</span>
+<span class="cstat-no" title="statement not covered" >    for ((i = x - 1); i &gt;= 0; i--) {</span>
+<span class="cstat-no" title="statement not covered" >      tempY++</span>
+<span class="cstat-no" title="statement not covered" >      if ((tempY &lt;= 5) &amp;&amp; (board[tempY][i] === currentPlayer)) {</span>
+<span class="cstat-no" title="statement not covered" >        leftDownCount++</span>
+      } else {
+<span class="cstat-no" title="statement not covered" >        break </span>// exit if not contiguous
+      }
+    }
+  }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  totalCount = totalCount + rightUpCount + leftDownCount</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return {</span>
+    totalCount: totalCount,
+    rightUpCount: rightUpCount,
+    leftDownCount: leftDownCount
+  }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Jan 25 2017 16:45:50 GMT-0500 (EST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
