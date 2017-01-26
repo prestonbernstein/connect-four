@@ -110,10 +110,10 @@ export const playTurn = (x, y) => {
 
 const checkIfWinner = () => {
   return (dispatch, getState) => {
-    const { lastMove, board, currentPlayer } = getState().connectFour
+    const { lastMovePlayer1, lastMovePlayer2, board, currentPlayer } = getState().connectFour
 
     // returns true if won
-    if (calculateIfGameWon(lastMove, board, currentPlayer) === true) {
+    if (calculateIfGameWon(lastMovePlayer1, lastMovePlayer2, board, currentPlayer) === true) {
       return Promise.resolve(
         dispatch(endGame()))
     }
@@ -130,7 +130,8 @@ const makeAIMoveIfPlayerTwo = () => {
     const {
       currentPlayer,
       previousPlayer,
-      lastMove,
+      lastMovePlayer1,
+      lastMovePlayer2,
       board,
       isHardMode
     } = getState().connectFour
@@ -139,13 +140,20 @@ const makeAIMoveIfPlayerTwo = () => {
       return Promise.resolve()
     }
 
-    return Promise.resolve(dispatch(getAIMove(lastMove, board, previousPlayer, currentPlayer, isHardMode)))
+    return Promise.resolve(dispatch(getAIMove(
+      lastMovePlayer1,
+      lastMovePlayer2,
+      board,
+      previousPlayer,
+      currentPlayer,
+      isHardMode
+    )))
   }
 }
 
-const getAIMove = (lastMove, board, previousPlayer, currentPlayer, isHardMode) => {
+const getAIMove = (lastMovePlayer1, lastMovePlayer2, board, previousPlayer, currentPlayer, isHardMode) => {
   return (dispatch) => {
-    const AIMove = calculateAIMove(lastMove, board, previousPlayer, currentPlayer, isHardMode)
+    const AIMove = calculateAIMove(lastMovePlayer1, lastMovePlayer2, board, previousPlayer, currentPlayer, isHardMode)
     const { x, y } = AIMove
 
     return Promise.resolve(dispatch(playTurn(x, y)))
@@ -198,20 +206,27 @@ const ACTION_HANDLERS = {
   },
   [CONNECT_FOUR_UPDATE_BOARD]: (state, action) => {
     const x = action.payload.x
-    const boardAndLastMove = calculateBoardUpdate(state.board, x, state.currentPlayer)
+    const boardAndLastMove = calculateBoardUpdate(
+      state.board,
+      x,
+      state.currentPlayer,
+      state.lastMovePlayer1,
+      state.lastMovePlayer2
+    )
     const {
       board, // use lastMove to calculate AI move
-      lastMove // if currently player one's turn then calculate move for AI
+      lastMovePlayer1,
+      lastMovePlayer2
     } = boardAndLastMove
 
     return ({
       ...state,
       board: board,
-      lastMove: lastMove
+      lastMovePlayer1: lastMovePlayer1,
+      lastMovePlayer2: lastMovePlayer2
     })
   },
   [CONNECT_FOUR_RESET_BOARD]: (state, action) => {
-    console.log(savedInitialState)
     return ({
       ...state,
       board: [
@@ -252,7 +267,8 @@ const initialState = {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0]
   ],
-  lastMove: [],
+  lastMovePlayer1: [],
+  lastMovePlayer2: [],
   isBoardActive: false,
   isGameOver: true,
   isHardMode: false,
